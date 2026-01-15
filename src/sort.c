@@ -34,21 +34,28 @@ Stat insertion_sort(int *arr, int n)
 {
     if (!arr || n <= 1)
         return NULL;
+
     Stat stat = stat_constructor();
+
     for (int i = 1; i < n; i++) {
         int key = arr[i];
         int j = i - 1;
 
-        stat -> comparisons++;
-        while (j >= 0 && arr[j] > key) {
-            stat -> swaps++;
-            arr[j + 1] = arr[j];
-            j--;
+        while (j >= 0) {
+            stat->comparisons++;
+            if (arr[j] > key) {
+                arr[j + 1] = arr[j];
+                stat->swaps++;
+                j--;
+            } else {
+                break;
+            }
         }
         arr[j + 1] = key;
     }
     return stat;
 }
+
 
 /* ================= BUBBLE SORT ================= */
 
@@ -72,13 +79,14 @@ Stat bubble_sort(int *arr, int n)
 
 /* ================= MERGE SORT ================= */
 
-static void merge(int *arr, int *tmp, int left, int mid, int right)
+static void merge(int *arr, int *tmp, int left, int mid, int right, Stat stat)
 {
     int i = left;
     int j = mid + 1;
     int k = left;
 
     while (i <= mid && j <= right) {
+        stat->comparisons++;
         if (arr[i] <= arr[j])
             tmp[k++] = arr[i++];
         else
@@ -92,9 +100,9 @@ static void merge(int *arr, int *tmp, int left, int mid, int right)
         tmp[k++] = arr[j++];
 }
 
+
 static void merge_sort_rec(int *arr, int *tmp, int left, int right, Stat stat)
 {
-
     if (left >= right)
         return;
 
@@ -102,15 +110,12 @@ static void merge_sort_rec(int *arr, int *tmp, int left, int right, Stat stat)
 
     merge_sort_rec(arr, tmp, left, mid, stat);
     merge_sort_rec(arr, tmp, mid + 1, right, stat);
+    merge(arr, tmp, left, mid, right, stat);
 
-    stat -> comparisons++;
-    merge(arr, tmp, left, mid, right);
-
-    for (int i = left; i <= right; i++) {
-        stat -> comparisons++;
+    for (int i = left; i <= right; i++)
         arr[i] = tmp[i];
-    }
 }
+
 
 Stat merge_sort(int *arr, int n)
 {
@@ -133,21 +138,23 @@ Stat merge_sort(int *arr, int n)
 
 static int partition(int *arr, int left, int right, Stat stat)
 {
-    stat -> comparisons++;
     int pivot = arr[right];
     int i = left - 1;
 
     for (int j = left; j < right; j++) {
+        stat->comparisons++;
         if (arr[j] <= pivot) {
             i++;
             swap_int(&arr[i], &arr[j]);
-            stat -> swaps++;
+            stat->swaps++;
         }
     }
     swap_int(&arr[i + 1], &arr[right]);
-    stat -> swaps++;
+    stat->swaps++;
+
     return i + 1;
 }
+
 
 static void quick_sort_rec(int *arr, int left, int right, Stat stat)
 {
