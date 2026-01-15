@@ -4,6 +4,7 @@
 #include "../include/sort.h"
 #include "../include/structs.h"
 
+// Display the menu options
 static void show_menu() {
     printf("==== MENU RESEAU DE TRANSPORT ====\n");
     printf("1 - Afficher les informations d'une station\n");
@@ -14,6 +15,7 @@ static void show_menu() {
     printf("Votre choix : ");
 }
 
+// Print the list of stations
 static void print_stations(const Station *station_array, int n)
 {
     for (int i = 0; i < n; i++) {
@@ -23,6 +25,7 @@ static void print_stations(const Station *station_array, int n)
     }
 }
 
+// Handle the user's menu choice
 static void handle_choice(int choice, Station *stations, int n) {
     switch (choice) {
         case 1:
@@ -61,7 +64,7 @@ static void handle_choice(int choice, Station *stations, int n) {
     }
 }
 
-// Call after data from file is loaded and processed
+// Call after data from text file is loaded and processed
 void menu_loop(Station *stations, int n) {
     int choice = -1;
 

@@ -2,6 +2,7 @@
 #include "../include/structs.h"
 
 /* ================= Stat constructor ================= */
+// Create and initialize a Stat structure
 Stat stat_constructor(void)
 {
     Stat s = malloc(sizeof(Sstat));
@@ -11,6 +12,7 @@ Stat stat_constructor(void)
 }
 
 Station* station_constructor(int id, int degree)
+// Create and initialize a Station structure
 {
     Station *s = malloc(sizeof(Station));
     if (!s)
