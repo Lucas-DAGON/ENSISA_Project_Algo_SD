@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 #include "../include/sort.h"
 #include "../include/structs.h"
+#include "../include/menu.h"
 
-static int *read_file(const char *filename, int *size)
+#define LINE_SIZE 256
+
+/* Read STATION lines and build a Station station_arrayay */
+static Station *read_station_file(const char *filename, int *count)
 {
     FILE *fp = fopen(filename, "r");
     if (!fp) {
@@ -12,37 +18,61 @@ static int *read_file(const char *filename, int *size)
     }
 
     int capacity = 16;
-    int count = 0;
-    int *arr = malloc(sizeof(int) * capacity);
-    if (!arr) {
+    int n = 0;
+    Station *stations = malloc(sizeof(Station) * capacity);
+    if (!stations) {
         fclose(fp);
         return NULL;
     }
 
-    while (fscanf(fp, "%d", &arr[count]) == 1) {
-        count++;
-        if (count >= capacity) {
-            capacity *= 2;
-            int *tmp = realloc(arr, sizeof(int) * capacity);
-            if (!tmp) {
-                free(arr);
-                fclose(fp);
-                return NULL;
+    char line[LINE_SIZE];
+
+    while (fgets(line, LINE_SIZE, fp)) {
+
+        /* Ignore comments and empty lines */
+        if (line[0] == '#' || line[0] == '\n')
+            continue;
+
+        if (strncmp(line, "STATION;", 8) == 0) {
+            int id;
+            char name[LINE_SIZE];
+
+            /* Parse: STATION;id;name */
+            if (sscanf(line, "STATION;%d;%[^\n]", &id, name) == 2) {
+
+                if (n >= capacity) {
+                    capacity *= 2;
+                    Station *tmp = realloc(stations, sizeof(Station) * capacity);
+                    if (!tmp) {
+                        free(stations);
+                        fclose(fp);
+                        return NULL;
+                    }
+                    stations = tmp;
+                }
+
+                stations[n].id_station = id;
+
+                /* Fake degree for testing (deterministic) */
+                stations[n].degree = (id * 3) % 7 + 1;
+
+                n++;
             }
-            arr = tmp;
         }
     }
 
     fclose(fp);
-    *size = count;
-    return arr;
+    *count = n;
+    return stations;
 }
 
-static void print_array(const int *arr, int n)
+static void print_stations(const Station *station_array, int n)
 {
-    for (int i = 0; i < n; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
+    for (int i = 0; i < n; i++) {
+        printf("Station %d -> degree %d\n",
+               station_array[i].id_station,
+               station_array[i].degree);
+    }
 }
 
 int main(int argc, char **argv)
@@ -53,23 +83,15 @@ int main(int argc, char **argv)
     }
 
     int n = 0;
-    int *arr = read_file(argv[1], &n);
-    if (!arr)
+    Station *stations = read_station_file(argv[1], &n);
+    if (!stations)
         return EXIT_FAILURE;
 
-    printf("Original array:\n");
-    print_array(arr, n);
+    printf("Original stations:\n");
+    print_stations(stations, n);
 
-    Stat stat = bubble_sort(arr, n);   // change here to test other sorts
+    menu_loop(stations, n);
 
-    printf("Sorted array:\n");
-    print_array(arr, n);
-    if (stat) {
-        printf("Comparisons: %d\n", stat->comparisons);
-        printf("Swaps: %d\n", stat->swaps);
-        free(stat);
-    }
-
-    free(arr);
+    
     return EXIT_SUCCESS;
 }
