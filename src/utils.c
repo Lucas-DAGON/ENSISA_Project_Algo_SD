@@ -1,13 +1,6 @@
 #include "..\include\utils.h"
 
-void swap_int(int *a, int *b)
-{
-    // swap two elements
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
+// check if array is sorted in non-decreasing order
 bool is_sorted_nondecreasing(int *arr, int n)
 {
     // check if array is sorted, if yes return true
@@ -18,6 +11,7 @@ bool is_sorted_nondecreasing(int *arr, int n)
     return true;
 }
 
+// copy array elements src into dst
 void copy_array(int *src, int *dst, int n)
 {
     // copy array elements src into dst

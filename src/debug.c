@@ -54,6 +54,7 @@ static Station *read_station_file(const char *filename, int *count)
                 stations[n].id_station = id;
 
                 /* Fake degree for testing (deterministic) */
+                // Need to replace with real degree from text file later
                 stations[n].degree = (id * 3) % 7 + 1;
 
                 n++;
@@ -69,9 +70,7 @@ static Station *read_station_file(const char *filename, int *count)
 static void print_stations(const Station *station_array, int n)
 {
     for (int i = 0; i < n; i++) {
-        printf("Station %d -> degree %d\n",
-               station_array[i].id_station,
-               station_array[i].degree);
+        printf("Station %d -> degree %d\n", station_array[i].id_station, station_array[i].degree);
     }
 }
 
