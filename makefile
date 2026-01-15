@@ -1,6 +1,6 @@
 # Compiler and flags
 CC := gcc
-CFLAGS := -Wall -g -MMD
+CFLAGS := -Wall -Wextra -o7 -g
 CPPFLAGS := -Iinclude
 
 # Build directory
@@ -25,8 +25,11 @@ all: create_binary
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-$(BUILD_DIR)/%.o: $(SRC)/%.c
+$(BUILD_DIR)/%.o: $(SRC)/%.c | $(BUILD_DIR)
 	$(CC) $(CPPFLAGS) -I$(INCLUDE) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR):
+	@mkdir -p $(BUILD_DIR) 2> /dev/null || powershell -NoProfile -Command "if (-not (Test-Path -Path '$(BUILD_DIR)')) { New-Item -ItemType Directory -Path '$(BUILD_DIR)' | Out-Null }"
 
 create_binary: $(TARGET)
 	@echo "\nBuilding binary..."
