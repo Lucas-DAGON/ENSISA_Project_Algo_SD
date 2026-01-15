@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-/* ================= statistics structure ================= */
+/* ================= Structure ================= */
 // Keep track of statistics in sorting algorithms
 typedef struct Sstat {
     int comparisons;
@@ -11,5 +11,14 @@ typedef struct Sstat {
 
 typedef Sstat* Stat;
 
-/* ================= Struct constructor (prototype) ================= */
-Stat stat_constructor(void);
+typedef struct {
+    int id_station;
+    int degree;
+} Station;
+
+
+
+
+/* ================= Struct constructor ================= */
+Stat stat_constructor();
+Station* station_constructor(int id, int degree);
