@@ -15,10 +15,17 @@ Station* station_constructor(int id, int degree)
 // Create and initialize a Station structure
 {
     Station *s = malloc(sizeof(Station));
-    if (!s)
-        return NULL;
-
     s->id_station = id;
     s->degree = degree;
     return s;
 }
+
+// Constructeur pour une arête
+Edge* edge_constructor(int destination, int time) {
+    Edge *e = malloc(sizeof(Edge));
+    e->destination = destination;
+    e->time = time;
+    e->next = NULL;
+    return e;
+}
+
