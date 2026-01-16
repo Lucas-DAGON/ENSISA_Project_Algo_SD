@@ -11,11 +11,19 @@ typedef struct Sstat {
 
 typedef Sstat* Stat;
 
+// Structure pour une arête (lien entre deux stations)
+typedef struct Edge {
+    int destination;
+    int time;
+    struct Edge *next;
+} Edge;
+
+// Structure pour une station
 typedef struct {
     int id_station;
     int degree;
+    Edge *edges;  // Liste chaînée des voisins
 } Station;
-
 
 
 

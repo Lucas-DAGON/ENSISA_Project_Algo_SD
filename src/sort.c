@@ -15,17 +15,17 @@ static void swap_station(Station *a, Station *b)
 
 /* ================= SELECTION SORT ================= */
 // Selection sort for Station array
-static Stat selection_sort_station(Station *station_list, int n)
+static Stat selection_sort_station(Station *station_list, int nb_stations)
 {
-    if (!station_list || n <= 1)
+    if (!station_list || nb_stations <= 1)
         return NULL;
 
     Stat stat = stat_constructor();
 
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 0; i < nb_stations - 1; i++) {
         int min = i;
 
-        for (int j = i + 1; j < n; j++) {
+        for (int j = i + 1; j < nb_stations; j++) {
             stat->comparisons++;
             if (station_list[j].degree < station_list[min].degree)
                 min = j;
@@ -42,14 +42,14 @@ static Stat selection_sort_station(Station *station_list, int n)
 
 /* ================= INSERTION SORT ================= */
 // Insertion sort function
-static Stat insertion_sort_station(Station *station_list, int n)
+static Stat insertion_sort_station(Station *station_list, int nb_stations)
 {
-    if (!station_list || n <= 1)
+    if (!station_list || nb_stations <= 1)
         return NULL;
 
     Stat stat = stat_constructor();
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < nb_stations; i++) {
         Station key = station_list[i];
         int j = i - 1;
 
@@ -72,15 +72,15 @@ static Stat insertion_sort_station(Station *station_list, int n)
 
 /* ================= BUBBLE SORT ================= */
 // Bubble sort function
-static Stat bubble_sort_station(Station *station_list, int n)
+static Stat bubble_sort_station(Station *station_list, int nb_stations)
 {
-    if (!station_list || n <= 1)
+    if (!station_list || nb_stations <= 1)
         return NULL;
 
     Stat stat = stat_constructor();
 
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - 1 - i; j++) {
+    for (int i = 0; i < nb_stations - 1; i++) {
+        for (int j = 0; j < nb_stations - 1 - i; j++) {
             stat->comparisons++;
             if (station_list[j].degree > station_list[j + 1].degree) {
                 swap_station(&station_list[j], &station_list[j + 1]);
@@ -134,19 +134,19 @@ static void merge_sort_station_rec(Station *station_list, Station *temp_array, i
 
 
 // Merge sort main function
-static Stat merge_sort_station(Station *station_list, int n)
+static Stat merge_sort_station(Station *station_list, int nb_stations)
 {
-    if (!station_list || n <= 1)
+    if (!station_list || nb_stations <= 1)
         return NULL;
 
     Stat stat = stat_constructor();
-    Station *temp_array = malloc(sizeof(Station) * n);
+    Station *temp_array = malloc(sizeof(Station) * nb_stations);
     if (!temp_array) {
         free(stat);
         return NULL;
     }
 
-    merge_sort_station_rec(station_list, temp_array, 0, n - 1, stat);
+    merge_sort_station_rec(station_list, temp_array, 0, nb_stations - 1, stat);
     free(temp_array);
     return stat;
 }
@@ -185,32 +185,32 @@ static void quick_sort_station_rec(Station *station_list, int left, int right, S
 }
 
 // Quick sort main function
-static Stat quick_sort_station(Station *station_list, int n)
+static Stat quick_sort_station(Station *station_list, int nb_stations)
 {
-    if (!station_list || n <= 1)
+    if (!station_list || nb_stations <= 1)
         return NULL;
 
     Stat stat = stat_constructor();
-    quick_sort_station_rec(station_list, 0, n - 1, stat);
+    quick_sort_station_rec(station_list, 0, nb_stations - 1, stat);
     return stat;
 }
 
 
 
 /* ================= SORT STATIONS BY DEGREE ================= */
-Stat sort_stations_by_degree(Station *stations, int n, int method)
+Stat sort_stations_by_degree(Station *stations, int nb_stations, int method)
 {
     switch (method) {
         case 1:
-            return selection_sort_station(stations, n);
+            return selection_sort_station(stations, nb_stations);
         case 2:
-            return insertion_sort_station(stations, n);
+            return insertion_sort_station(stations, nb_stations);
         case 3:
-            return bubble_sort_station(stations, n);
+            return bubble_sort_station(stations, nb_stations);
         case 4:
-            return merge_sort_station(stations, n);
+            return merge_sort_station(stations, nb_stations);
         case 5:
-            return quick_sort_station(stations, n);
+            return quick_sort_station(stations, nb_stations);
         default:
             return NULL;
     }

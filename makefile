@@ -15,7 +15,7 @@ INCLUDE := include
 SRCS := $(wildcard $(SRC)/*.c)
 OBJS := $(patsubst $(SRC)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 DEPS := $(OBJS:.o=.d)
-TARGET := $(BUILD_DIR)/debug.exe
+TARGET := $(BUILD_DIR)/metro.exe
 
 .PHONY: all create_binary clean help
 

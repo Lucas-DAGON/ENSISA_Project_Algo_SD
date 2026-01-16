@@ -1,4 +1,4 @@
-#include "..\include\utils.h"
+#include "../include/utils.h"
 
 // check if array is sorted in non-decreasing order
 bool is_sorted_nondecreasing(int *arr, int n)

@@ -1,9 +1,0 @@
-# Test file for sorting stations
-STATION;0;La Défense
-STATION;1;Esplanade de la Défense
-STATION;2;Pont de Neuilly
-STATION;3;Les Sablons
-STATION;4;Porte Maillot
-STATION;5;Argentine
-STATION;6;Charles de Gaulle - Étoile
-STATION;7;George V
