@@ -103,7 +103,8 @@ static void handle_choice(int choice, Station *stations, int nb_stations) {
 
         case 4: {
             // Change the function here to test other sorts
-            Stat stat = sort_stations_by_degree(stations, nb_stations, 5); // 1: Selection, 2: Insertion, 3: Bubble, 4: Merge, 5: Quick
+            int sort_algorithm = 4; // Hardcoded for Quick Sort as it is the best algorithm for our scenario
+            Stat stat = sort_stations_by_degree(stations, nb_stations, sort_algorithm); // 0: Selection, 1: Insertion, 2: Bubble, 3: Merge, 4: Quick
 
             printf("\nSorted stations (by degree):\n");
             print_stations(stations, nb_stations);
