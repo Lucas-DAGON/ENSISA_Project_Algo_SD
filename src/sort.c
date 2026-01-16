@@ -201,15 +201,15 @@ static Stat quick_sort_station(Station *station_list, int nb_stations)
 Stat sort_stations_by_degree(Station *stations, int nb_stations, int method)
 {
     switch (method) {
-        case 1:
+        case 0:
             return selection_sort_station(stations, nb_stations);
-        case 2:
+        case 1:
             return insertion_sort_station(stations, nb_stations);
-        case 3:
+        case 2:
             return bubble_sort_station(stations, nb_stations);
-        case 4:
+        case 3:
             return merge_sort_station(stations, nb_stations);
-        case 5:
+        case 4:
             return quick_sort_station(stations, nb_stations);
         default:
             return NULL;
